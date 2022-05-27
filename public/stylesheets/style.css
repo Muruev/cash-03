@@ -1,0 +1,68 @@
+@import "sign_in.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.w-select {
+  width: 100%;
+  height: 40px;
+}
+
+body::-webkit-scrollbar {
+  width: 0.7em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.category-badge {
+  font-size: 20px !important;
+}
+
+.category-badge:hover {
+  background-color: #007bff;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.product-card {
+  height: 100%;
+  padding: 5px;
+  margin: 15px;
+  border: 1px solid #cccccc;
+}
+
+.product-card img {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  object-fit: contain;
+}
+
+#catalog {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fill, auto);
+  grid-row-gap: 0.5em;
+  grid-column-gap: 0.5em;
+}

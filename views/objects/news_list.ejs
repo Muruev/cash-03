@@ -1,0 +1,36 @@
+<table id='products' class = 'table table-striped tableFixHead text-center'>
+    <thead class ='thead-dark'>
+    <tr>
+        <th width="5%" scope="col">No.</th>
+        <th width="10%" scope="col">Дата</th>
+        <th width="35%" scope="col">Заголовок</th>
+        <th width="15%" scope="col">Просмотр</th>
+        <th width="15%" scope="col">Удалить</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% for(let i = 0; i < data.news.length; i++) { %>
+            <tr>
+                <td><%=i+1%></td>
+                <td><%=new Date(data.news[i].created_at).toLocaleDateString()%></td>
+                <td><%=data.news[i].title%></td>
+                <td>
+                    <button id="<%=data.news[i]._id%>" data-toggle="modal" data-target="#article_view_model"
+                            class="btn" type="button" >
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="article-delete btn" data-id="<%=data.news[i]._id%>">
+                        <i class="fa fa-ban text-danger" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        <%}%>
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+
+    })
+</script>

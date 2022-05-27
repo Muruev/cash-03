@@ -1,0 +1,42 @@
+
+<form method="post" id ="add_article" action="/news/create" class="pt-2">
+    <div class="form-group">
+        <input class="form-control form-control-lg" name='title' placeholder="Заголовок" required>
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" name='text' placeholder="Содержимое" rows="4"></textarea>
+    </div>
+    <div class="row mb-3">
+        <div class="col" style="padding-right:20px; border-right: 1px solid #ccc;">
+            <select class="form-select mb-3 w-select" id="art-prod-category-list">
+                <option selected disabled value="">Выберите категорию</option>
+                <% if (!locals.data) locals.data = {} %>
+                <% if (!locals.data.categories) locals.data.categories = [] %>
+                <% for(let category of data.categories) { %>
+                <option value="<%=category._id%>"><%=category.name%></option>
+                <% } %>
+            </select>
+            <select class="form-select mb-3 w-select" id="product-list">
+                <option selected disabled value="">Выберите продукт</option>
+            </select>
+            <button id="add_product_to_list" class="btn btn-outline-primary mb-3 w-100"
+                    type="button" disabled>&#8595; Добавить продукт&#8595;</button>
+            <div id="added_products" style="overflow-y: scroll; height:200px;"></div>
+        </div>
+        <div class="col" style="padding-right:20px;">
+            <select class="form-select mb-3 w-select" id="art-category-list">
+                <option selected disabled value="">Выберите категорию</option>
+                <% if (!locals.data) locals.data = {} %>
+                <% if (!locals.data.categories) locals.data.categories = [] %>
+                <% for(let category of data.categories) { %>
+                <option value="<%=category._id%>"><%=category.name%></option>
+                <% } %>
+            </select>
+            <button id="add_category_to_list" class="btn btn-outline-primary mb-3 w-100"
+                    type="button" disabled>&#8595; Добавить категорию&#8595;</button>
+            <div id="added_categories" style="overflow-y: scroll; height:250px;"></div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success w-select">Добавить</button>
+</form>
+<hr>

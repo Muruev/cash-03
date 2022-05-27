@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="/stylesheets/image-zoom.css" />
+<script src="/javascripts/image-zoom.js"></script>
+
+<table id='products' class = 'table table-striped tableFixHead text-center'>
+    <thead class ='thead-dark'>
+    <tr>
+        <th width="5%" scope="col">No.</th>
+        <th width="25%" scope="col">Наименование</th>
+        <th width="15%" scope="col">Цена</th>
+        <th width="15%" scope="col">Изображение</th>
+        <th width="15%" scope="col">Категория</th>
+        <th width="15%" scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+        <% for(let i = 0; i < data.products.length; i++) { %>
+            <tr style="height: 150px">
+                <td><%=i+1%></td>
+                <td><%=data.products[i].name%></td>
+                <td>
+                    <%= data.products[i].price + ' за '
+                    + data.products[i].amount + ' '
+                    + data.products[i].measurement%>
+                </td>
+                <td><img data-enlargeable width="100" style="cursor: zoom-in"
+                         src="<%=data.products[i].img%>" alt="Product image"/></td>
+                <td><%=data.products[i].category.name%></td>
+                <td>
+                    <button class="btn product_delete" data-id="<%=data.products[i]._id%>">
+                        <i class="text-danger fa fa-2x fa-ban" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        <%}%>
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('img[data-enlargeable]').addClass('img-enlargeable').click(function() {
+            var src = $(this).attr('src');
+            var modal;
+
+            function removeModal() {
+                modal.remove();
+                $('body').off('keyup.modal-close');
+            }
+
+            modal = $('<div>').css({
+                background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+                backgroundSize: 'contain',
+                width: '100%',
+                height: '100%',
+                position: 'fixed',
+                zIndex: '10000',
+                top: '0',
+                left: '0',
+                cursor: 'zoom-out'
+            }).click(function() {
+                removeModal();
+            }).appendTo('body');
+
+            $('body').on('keyup.modal-close', function(e) {
+                if (e.key === 'Escape') {
+                    removeModal();
+                }
+            });
+        });
+    })
+</script>

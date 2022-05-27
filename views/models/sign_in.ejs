@@ -1,0 +1,36 @@
+<div class="modal" id="sign_in_modal" tabindex="-1" role="dialog" >
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Пользователь</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="p-3">
+				<div class="container-fluid ">
+					<form method="post" id ="sign_in" action="/users" class="register-form">
+						<div class="row">
+							<div class="col-md-4 col-sm-4 col-lg-4">
+								<label for="firstName">Пользователь</label>
+								<input name="username" class="form-control" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-sm-4 col-lg-4">
+								<label for="password">Пароль</label>
+								<input name="password" class="form-control" type="password">
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col">
+								<button type="submit" class="btn btn-default logbutton">Войти</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

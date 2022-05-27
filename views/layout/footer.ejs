@@ -1,0 +1,343 @@
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				function objectifyForm(formArray) {
+					var returnArray = {};
+					for (var i = 0; i < formArray.length; i++){
+						returnArray[formArray[i]['name']] = formArray[i]['value'];
+					}
+					return returnArray;
+				}
+
+				$('#sign_in').submit(function (e) {
+					e.preventDefault();
+					let form = $(this);
+					let url = form.attr('action');
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: url, // Адрес
+						data: form.serialize(), // сериализация формы.
+						timeout: 5000,
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+				$('#sign_out').click(function (e) {
+					e.preventDefault();
+
+					$.ajax({
+						type: "GET", // Тип запроса
+						url: '/users/logout', // Адрес
+						timeout: 5000,
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+				$('#add_category').submit(function (e) {
+					e.preventDefault();
+
+					let form = $(this);
+					let url = form.attr('action');
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: url, // Адрес
+						data: form.serialize(), // сериализация формы.
+						timeout: 5000,
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+				$('#delete_category').submit(function (e) {
+					e.preventDefault();
+
+					let form = $(this);
+					let url = form.attr('action');
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: url, // Адрес
+						timeout: 5000,
+						data: form.serialize(), // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('#create_product').submit(function (e) {
+					e.preventDefault();
+
+					let form = $(this);
+					console.log(form.serialize())
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: '/products/create', // Адрес
+						timeout: 5000,
+						data: form.serialize(), // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('#update_product').submit(function (e) {
+					e.preventDefault();
+
+					let form = $(this);
+					console.log(form.serialize())
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: '/products/create', // Адрес
+						timeout: 5000,
+						data: form.serialize(), // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('.product_delete').click(function (e) {
+
+					let url = '/products/' + $(this).data('id') + '?action=delete';
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: url, // Адрес
+						timeout: 5000, // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('.article-delete').click(function (e) {
+
+					let url = '/news/' + $(this).data('id') + '?action=delete';
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: url, // Адрес
+						timeout: 5000, // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('#art-prod-category-list').change(function (e) {
+					<% if (!locals.data) locals.data = {} %>
+					<% if (!locals.data.products) locals.data.products = [] %> // Если нет пользователей установим пустой
+					let products = [<%-JSON.stringify(data.products)%>][0] // десериализация данных
+
+					let product_list = $('#product-list').find('option').remove().end()
+
+					product_list.append($('<option>', {
+						text: 'Выберите продукт',
+						value: '',
+						disable: 'disable'
+					}))
+
+					for(let product of products.filter(p => p.category._id === $(this).val())) {
+						product_list.append($('<option>', {
+							value: product._id,
+							text: product.name
+						}))
+					}
+
+					$('#add_product_to_list').attr('disabled', 'disabled')
+				})
+
+				$('#product-list').change(function (e) {
+					$('#add_product_to_list').removeAttr('disabled')
+				})
+
+				$('#add_product_to_list').click(function (e) {
+					let product_list = $('#product-list');
+					if($('#added_products a[value=' + product_list.val() + ']').length > 0)
+						return true;
+
+					$('#added_products').append($('<a>', {
+						class: 'list-group-item list-group-item-action',
+						value: product_list.val(),
+						text: $('#product-list option:selected').text(),
+						href: '#'
+					}).click(function (e) {
+						$(this).remove()
+					}))
+				})
+
+				$('#art-category-list').change(function (e) {
+					$('#add_category_to_list').removeAttr('disabled')
+				})
+
+				$('#add_category_to_list').click(function (e) {
+					let category_list = $('#art-category-list');
+					if($('#added_categories a[value=' + category_list.val() + ']').length > 0)
+						return true;
+
+					$('#added_categories').append($('<a>', {
+						class: 'list-group-item list-group-item-action',
+						value: category_list.val(),
+						text: $('#art-category-list option:selected').text(),
+						href: '#'
+					}).click(function (e) {
+						$(this).remove()
+					}))
+				})
+
+				$('#add_article').submit(function (e) {
+					e.preventDefault();
+
+					let obj = objectifyForm($(this).serializeArray());
+					obj['categories'] = $('#added_categories a').map(function() {
+						return $(this).attr('value')
+					}).get()
+
+					obj['products'] = $('#added_products a').map(function() {
+						return $(this).attr('value')
+					}).get()
+
+					obj['author'] = '<%=user !== undefined ? user._id : ""%>'
+
+					$.ajax({
+						type: "POST", // Тип запроса
+						url: '/news/create', // Адрес
+						timeout: 5000,
+						data: {data: JSON.stringify(obj)}, // сериализация формы.
+						error: function(jqXHR, textStatus, errorThrown) {
+							return false;
+						},
+						success: function (data) {
+							location.reload(); // Обновляем страницу
+							return true;
+						},
+					});
+				})
+
+				$('#article_view_model').on('shown.bs.modal', function (e) {
+					<% if (!locals.data) locals.data = {} %>
+					<% if (!locals.data.news) locals.data.news = [] %> // Если нет пользователей установим пустой
+
+					let news = [<%-JSON.stringify(data.news)%>][0] // десериализация данных
+					news = news.filter(n => n._id === e.relatedTarget.id)[0]
+
+					$('#modal_content').empty();
+					$('#news_cardTmpl').tmpl(news).appendTo('#modal_content');
+
+					$('#article_view_model').modal('show')
+				})
+
+				$('.category-badge').click(function (e) {
+					$('.category-badge').map(function () {
+						$(this).removeClass('badge-primary').addClass('badge-secondary')
+					})
+					$(this).removeClass('badge-secondary').addClass('badge-primary')
+					initializeProducts($(this).attr('value'))
+				})
+
+				function initializeNewsSlider() {
+					/* Filling news slider */
+					<% if (!locals.data) locals.data = {} %>
+					<% if (!locals.data.news) locals.data.news = [] %> // Если нет пользователей установим пустой
+
+					let news = [<%-JSON.stringify(data.news)%>][0] // десериализация данных
+
+					for(let i = 0; i < news.length; i++) {
+						let card = $('<div>', {
+							class: 'carousel-item' + (i === 0 ? ' active': '') + ' p-4'
+						}).append($('#news_cardTmpl').tmpl(news[i]).html())
+						$('#news_slider div.carousel-inner').append(card)
+					}
+				}
+				initializeNewsSlider();
+
+				function initializeProducts(id) {
+					let products = [<%-JSON.stringify(data.products)%>][0] // десериализация данных
+					products = products.filter(p => p.category._id === id)
+					$('#catalog').empty()
+					for(let product of products) {
+						$('#product_cardTmpl').tmpl(product).appendTo('#catalog')
+					}
+				}
+
+				initializeProducts($('.category-badge.badge-primary').attr('value'))
+			});
+		</script>
+		<script id = 'news_cardTmpl' type="text/x-jquery-tmpl">
+			<div style="width: 100%;">
+				<h3>
+					${title}
+					{{each categories}}
+						<span class="badge badge-primary">
+							${name}
+						</span>
+					{{/each}}
+				</h3>
+				<span>${text}</span>
+				<div class='row p-3'>
+					{{each products}}
+						<div class='product-card'>
+							<div class='d-flex justify-content-center'>
+								<img src="${img}">
+							</div>
+							<hr>
+							<div style='font-size: 20px'>${name}</div>
+						</div>
+					{{/each}}
+				</div>
+			</div>
+		</script>
+		<script id = 'product_cardTmpl' type="text/x-jquery-tmpl">
+			<div class='product-card'>
+				<div class='d-flex justify-content-center'>
+					<img src="${img}">
+				</div>
+				<hr>
+				<div style='font-size: 18px'>${name}</div>
+				<div style='font-size: 21px'>${price}</div>
+			</div>
+		</script>
+		<%- include('../models/sign_in.ejs') %>
+		<%- include('../models/article.ejs') %>
+		<%- include('../models/view_article.ejs') %>
+	</body>
+</html>

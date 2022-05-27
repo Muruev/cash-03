@@ -1,0 +1,18 @@
+<hr>
+<h3 class="text-center">Наши товары</h3>
+<%
+if(locals.data == undefined) locals.data = {};
+if(locals.data.categories == undefined) locals.data.categories = {};
+if(locals.data.products == undefined) locals.data.products = {};
+%>
+<div class="p-3">
+    <% for(let i = 0; i < data.categories.length; i++)  { %>
+    <span value="<%=data.categories[i]._id%>"
+          class="badge category-badge <%= i == 0 ? 'badge-primary' : 'badge-secondary'%>">
+            <%=data.categories[i].name%>
+        </span>
+    <% }%>
+</div>
+
+<div class="mb-5"><div id="catalog"></div></div>
+

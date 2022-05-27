@@ -1,0 +1,62 @@
+<%
+    let id = update ? 'update_product' : 'create_product';
+%>
+<form method="post" id ="<%=id%>" class="pt-2">
+    <div class="form-group">
+        <input class="form-control" name='name' placeholder="Наименование" required>
+    </div>
+    <div class="form-group">
+        <input class="form-control" name='price' placeholder="Цена" required>
+    </div>
+    <div class="input-group mb-3">
+        <input class="form-control" name='amount' placeholder="Количество" required>
+        <div class="input-group-append">
+            <input value="шт" name = 'measurement' hidden/>
+            <button id = 'measurement_dropdown' class="btn btn-outline-secondary dropdown-toggle" type="button"
+                    data-toggle="dropdown" value = 'шт' aria-haspopup="true" aria-expanded="false">шт</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onClick="setMeasurement(this)">шт</a>
+                <a class="dropdown-item" onClick="setMeasurement(this)">кг</a>
+                <a class="dropdown-item" onClick="setMeasurement(this)">грамм</a>
+                <a class="dropdown-item" onClick="setMeasurement(this)">литр</a>
+                <a class="dropdown-item" onClick="setMeasurement(this)">мл</a>
+            </div>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="custom-file">
+            <input name='img' hidden />
+            <input type="file" onchange="encodeImageFileAsURL(this)"
+                   class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">Выберите файл ... </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <select class="form-select w-select" name='category' id = 'prod-category-list' required>
+            <option selected disabled value="">Выберите категорию</option>
+            <% if (!locals.data) locals.data = {} %>
+            <% if (!locals.data.categories) locals.data.categories = [] %>
+            <% for(let category of data.categories) { %>
+            <option value="<%=category._id%>"><%=category.name%></option>
+            <% } %>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
+<script>
+    function setMeasurement(element) {
+        $('#measurement_dropdown')
+            .attr('value', element.innerText)
+            .text(element.innerText);
+    }
+    
+    function encodeImageFileAsURL(element) {
+        let file = element.files[0];
+        $('label[for="inputGroupFile01"]').text(element.files[0].name)
+        let reader = new FileReader();
+        reader.onloadend = function() {
+            $('input[name="img"]').attr('value', reader.result)
+        }
+        reader.readAsDataURL(file);
+    }
+</script>
