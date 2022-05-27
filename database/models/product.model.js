@@ -7,6 +7,7 @@ const ProductSchema = new mongoose.Schema({
     price: { type: String }, // Цена
     measurement: { type: String }, // Ед. измерение
     amount: { type: Number }, // Количество
+    description: { type: String }, // Описание
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' } // Категория
 });
 
