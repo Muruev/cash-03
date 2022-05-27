@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("../images/bg.jpg");
 }
 
 a {
@@ -49,6 +50,7 @@ body::-webkit-scrollbar-thumb {
   padding: 5px;
   margin: 15px;
   border: 1px solid #cccccc;
+  background: white;
 }
 
 .product-card img {
