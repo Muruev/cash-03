@@ -1,4 +1,59 @@
 <%- include('../layout/header') %>
+<script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+<div style="background: rgba(255, 255, 255, 0.9); margin: 15px; padding: 15px; border-radius: 10px;">
+    <div class="text-center mb-4 display-4">Где нас найти ?</div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3" id="map" style="width:500px; height:400px; left: 50px"></div>
+        </div>
+        <div class="col">
+            <h4 class="mb-3">Торговая компания 'Кэш'</h4>
+            <h5>Находится по адресу:</h5>
+            <div class="mb-3" style="font-size: 18px">
+                ​посёлок Матросова, 1а
+                <div><small class="text-muted">Железнодорожный район, Улан-Удэ, 670009</small></div>
+            </div>
+            <h4 class="mb-3">Номера телефонов:</h4>
+            <div>
+                <span style="font-size: 18px">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    +7 (3012) 37‒35‒50
+                </span>
+            </div>
+            <div>
+                <span style="font-size: 18px">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    +7 (3012) 37‒35‒51
+                </span>
+            </div>
+            <div>
+                <span style="font-size: 18px">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    +7 (3012) 37‒35‒52
+                </span>
+            </div>
+            <h4 class="my-3">Часы работы</h4>
+            <span style="font-size: 18px">
+                <i class="text-success fa fa-clock" aria-hidden="true"></i>
+                09:00 - 18:00
+            </span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var map;
+
+    DG.then(function () {
+        map = DG.map('map', {
+            center: [51.84195, 107.686],
+            zoom: 16,
+            dragging: false
+        });
+        var marker = DG.marker([51.84195, 107.68670]).addTo(map);
+        marker.bindLabel('Мы находимя здесь !', { static: true });
+    });
+</script>
 <%- include('../objects/news_slider.ejs') %>
 <%- include('../objects/catalog') %>
 <%- include('../layout/footer') %>

@@ -303,16 +303,18 @@
 			});
 		</script>
 		<script id = 'news_cardTmpl' type="text/x-jquery-tmpl">
-			<div style="width: 100%;">
-				<h3>
-					${title}
-					{{each categories}}
-						<span class="badge badge-primary">
-							${name}
-						</span>
-					{{/each}}
-				</h3>
-				<span>${text}</span>
+			<div style="width: 100%; background: rgba(255, 255, 255, 0.9)">
+				<div style="padding: 10px; background: #191F40; border-radius: 10px; color:#BFAB45">
+					<h3>
+						<span style='color: #D95D30'>${title}</span>
+						{{each categories}}
+							<span class="badge badge-primary">
+								${name}
+							</span>
+						{{/each}}
+					</h3>
+					<span>${text}</span>
+				</div>
 				<div class='row p-3'>
 					{{each products}}
 						<div class='product-card'>
